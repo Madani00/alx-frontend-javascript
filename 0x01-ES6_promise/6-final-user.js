@@ -4,11 +4,12 @@ import uploadPhoto from './5-photo-reject';
 export default function handleProfileSignup(firstName, lastName, fileName) {
   const signUpPromise = signUpUser(firstName, lastName);
   const uploadPromise = uploadPhoto(fileName);
-  
-  return Promise.allSettled([signUpPromise, uploadPromise]).then((results) => {
-    return results.map((result) => {
-      if (result.status === 'fulfilled')
+
+  return Promise.allSettled([signUpPromise, uploadPromise])
+    .then((res) => res.map((result) => {
+      if (result.status === 'fulfilled') {
         return { status: result.status, value: result.value };
-    });
-  });
+      }
+      return { status: result.status, reason: result.reason };
+    }));
 }
