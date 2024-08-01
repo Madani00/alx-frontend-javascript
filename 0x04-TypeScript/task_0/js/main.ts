@@ -5,94 +5,56 @@ export interface Student {
   location: string;
 };
 
-const studentA: Student = {
-  firstname: "Ibrahim",
-  lastname: "Soliu",
-  age: 14,
-  location: "Oyo state, Nigeria"
+const student1: Student = {
+  firstname: "madani",
+  lastname: "art",
+  age: 20,
+  location: "Agadir, morocco"
 };
 
-const studentB: Student = {
-  firstname: "Muhammad",
-  lastname: "Soliu",
+const student2: Student = {
+  firstname: "inyusha",
+  lastname: "samuri",
   age: 12,
-  location: "Costain Lagos, Nigeria"
+  location: "Tokyo, Japan"
 };
 
-const studentsList: Array<Student> = [
-  studentA,
-  studentB,
+const studentsList: Student[] = [
+  student1,
+  student2,
 ];
 
-const styleSheet = `
-html {
-  margin: 0;
-  height: 100%;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const table = document.createElement('table');
+  const tableHead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+  const headerName = document.createElement('th');
+  const headerLocation = document.createElement('th');
 
-body {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80%;
-  margin: 10%;
-}
+  headerName.textContent = 'First Name';
+  headerLocation.textContent = 'Location';
 
-table {
-  border-collapse: collapse;
-}
+  headerRow.appendChild(headerName);
+  headerRow.appendChild(headerLocation);
+  tableHead.appendChild(headerRow);
+  table.appendChild(tableHead);
 
-thead {
-  font-weight: bold;
-}
+  const tableBody = document.createElement('tbody');
 
-td {
-  padding: 10px;
-  border: 1px solid gray;
-  cursor: pointer;
-}
+  studentsList.forEach(student => {
+    const row = document.createElement('tr');
+    const cellName = document.createElement('td');
+    const cellLocation = document.createElement('td');
 
-td:hover {
-  background: gainsboro;
-}
+    cellName.textContent = student.firstName;
+    cellLocation.textContent = student.location;
 
-td:nth-child(1) {
-  text-align: center;
-}
-`;
+    row.appendChild(cellName);
+    row.appendChild(cellLocation);
+    tableBody.appendChild(row);
+  });
 
-export const displayStudents = (students: Array<Student>): void => {
-  const table = document.createElement("table");
-  const tableHeader = document.createElement("thead");
-  const tableBody = document.createElement("tbody");
-  const tableHeaderRow = document.createElement("tr");
-  const td1 = document.createElement("td");
-  const td2 = document.createElement("td");
-  td1.textContent = "Firstname";
-  td2.textContent = "Location";
-  tableHeaderRow.insertAdjacentElement("beforeend", td1);
-  tableHeaderRow.insertAdjacentElement("beforeend", td2);
-  tableHeader.insertAdjacentElement("beforeend", tableHeaderRow);
+  table.appendChild(tableBody);
+  document.body.appendChild(table);
+});
 
-  for (const student of students) {
-      const tr = document.createElement("tr");
-      const td1 = document.createElement("td");
-      const td2 = document.createElement("td");
-      td1.textContent = student.firstname;
-      td2.textContent = student.location;
-      tr.insertAdjacentElement("beforeend", td1);
-      tr.insertAdjacentElement("beforeend", td2);
-      tableBody.insertAdjacentElement("beforeend", tr);
-  }
-
-  table.insertAdjacentElement("beforeend", tableHeader);
-  table.insertAdjacentElement("beforeend", tableBody);
-  document.body.insertAdjacentElement("beforeend", table);
-};
-
-displayStudents(studentsList);
-const styleSheetElement = document.createElement("style");
-styleSheetElement.innerHTML = styleSheet;
-document.head.insertAdjacentElement("beforeend", styleSheetElement);
-document.title = "Task 0";
